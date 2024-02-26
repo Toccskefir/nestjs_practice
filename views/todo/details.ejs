@@ -1,0 +1,10 @@
+<html>
+    <body>
+        <h1><%=text%></h1>
+        <form method="post" action="/todo-html/edit/<%=id%>">
+            <input type="text" name="text" value= "<%=text%>"><br>
+            <button type="submit">Modify</button>
+            <button formmethod="post" formaction="/todo-html/delete/<%=id%>">Delete</button>
+        </form>
+    </body>
+</html>

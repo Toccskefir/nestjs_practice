@@ -9,5 +9,47 @@
 </head>
 <body>
     <h1>Szia!</h1>
+    <div id="list"></div>
+    <form id="form">
+      <label for="todo">Tennivaló: </label>
+      <input type="text" id="todo">
+      <input type="submit" value="Felvétel">
+    </form>
+    <script>
+      const div = document.getElementById("list");
+      const form = document.getElementById("form");
+
+      async function fetchTodos() {
+        const res = await fetch('/todos');
+        const json = await res.json();
+        console.log(json);
+
+        const ul = document.createElement("ul");
+        json.filter(e => {
+          const li = document.createElement("li");
+          li.textContent = e.text;
+          ul.appendChild(li);
+        });
+        div.appendChild(ul);
+      }
+      
+      form.onsubmit = (e) => {
+        e.preventDefault();
+
+        const todo = {
+          text: form.querySelector('input').value,
+        };
+
+        fetch('/todos', {
+          method: 'POST',
+          body: JSON.stringify(todo),
+          headers: {
+            'Content-type': 'application/json',
+          }
+        }).then(fetchTodos());
+      }
+
+      fetchTodos();
+    </script>
 </body>
 </html>

@@ -1,32 +1,22 @@
 import {
-  BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
-import { TodoService } from './todo.service';
-import { TodoDTO } from './todo.service';
+import { CreateTodoDTO, GetTodosInput, TodoService } from './todo.service';
 
 @Controller('/todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
   @Get()
-  getTodos(
-    @Query('limit') limit: string | string[],
-    @Query('offset') offset: string | string[],
-  ) {
-    if (Array.isArray(limit) || Array.isArray(offset)) {
-      throw new BadRequestException();
-    } else {
-      const limitNumber = limit === undefined ? Infinity : parseInt(limit);
-      const offsetNumber = offset === undefined ? 0 : parseInt(limit);
-
-      return this.todoService.getTodos(limitNumber, offsetNumber);
-    }
+  getTodos(@Query() input: GetTodosInput) {
+    return this.todoService.getTodos(input);
   }
 
   @Get('/:id')
@@ -39,7 +29,17 @@ export class TodoController {
   }
 
   @Post()
-  postTodo(@Body() todoDTO: TodoDTO) {
+  postTodo(@Body() todoDTO: CreateTodoDTO) {
     return this.todoService.postTodo(todoDTO);
+  }
+
+  @Put('/:id')
+  updateTodo(@Param('id') id: string, @Body() todoDTO: CreateTodoDTO) {
+    return this.todoService.updateTodo(id, todoDTO);
+  }
+
+  @Delete('/:id')
+  deleteTodo(@Param('id') id: string) {
+    return this.todoService.deleteTodo(id);
   }
 }

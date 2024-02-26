@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <div>
+            <% todos.forEach(item => { %>
+                <li>
+                    <form method="post" action="/todo-html/delete/<%=item.id%>">
+                        <a href="/todo-html/<%= item.id %>"> <%= item.text %> </a>
+                        <button>Delete</button>
+                    </form>
+                </li>
+            <% }); %>
+        </div>
+        <form method="post" action="/todo-html">
+            <label for="inputTodo">New todo:</label>
+            <input type="text" id="inputTodo" name="text">
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
