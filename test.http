@@ -45,10 +45,14 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "username": "john",
-  "password": "changeme"
+  "username": "maria",
+  "password": "guess"
 }
 
 ###
 GET http://localhost:3000/auth/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJqb2huIiwiaWF0IjoxNzA4NzAwMDA1LCJleHAiOjE3MDg3MDM2MDV9.357Hhp_-MxQlHeiHnVF21OohEyHlP7oaFTNZq3nXnWM
+Authorization: Bearer
+
+###
+GET http://localhost:3000/auth/admin
+Authorization: Bearer

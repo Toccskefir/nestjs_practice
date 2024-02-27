@@ -11,6 +11,7 @@ import {
 import { AuthService, SignInDto, UserData } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { Request } from 'express';
+import { WithRole } from "./with-role.decorator";
 
 interface RequestWithUser extends Request {
   user: UserData;
@@ -31,5 +32,12 @@ export class AuthController {
   getProfile(@Req() req: RequestWithUser) {
     const user: UserData = req.user;
     return user.username;
+  }
+
+  @UseGuards(AuthGuard)
+  @WithRole('admin')
+  @Get('admin')
+  public admin() {
+    return 'Hello, admin!';
   }
 }
